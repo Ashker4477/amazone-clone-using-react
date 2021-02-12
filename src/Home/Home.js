@@ -1,17 +1,39 @@
 import React from "react";
 import "./Home.css";
 import Product from "../Product/Product";
+import {Carousel} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
   return (
     <div className="home">
       <div className="home_Container">
-        <img
-          src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_45M_v2_1x._CB432458380_.jpg"
-          className="home_image"
-          alt="errorr"
-        />
-
+        <Carousel className="img">
+          <Carousel.Item interval={500}>
+            <img
+              className="d-block w-100"
+              id="home_img"
+              src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_45M_v2_1x._CB432458380_.jpg"
+              alt="First slide"
+            />
+          </Carousel.Item>
+          <Carousel.Item interval={500}>
+            <img
+              className="d-block w-100"
+              id="home_img"
+              src="https://images-eu.ssl-images-amazon.com/images/G/31/img20/Wireless/SamsungM/M02/Launch/11thFeb/D20414286_IN_WLME_SamsungGalaxy_M02_New_Launch_DesktopTallHero_1500x600_2._CB659654010_.jpg"
+              alt="Third slide"
+            />
+          </Carousel.Item>
+          <Carousel.Item interval={500}>
+            <img
+              className="d-block w-100"
+              id="home_img"
+              src="https://images-eu.ssl-images-amazon.com/images/G/31/img21/Gateway_JWELSSH/Feb/11thSale/walletandHandbags/GW_PC_BUNK_1500x600-eng._CB659681455_.jpg"
+              alt="Third slide"
+            />
+          </Carousel.Item>
+        </Carousel>
         <div className="home__row">
           <Product
             id="121"

@@ -1,14 +1,37 @@
 import React, { useState } from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { auth } from "../Firebase";
 
 function Register() {
+  const history = useHistory();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
 
-  
+  const validateForm = (e) => {
+    e.preventDefault();
+    if (name == "" || email == "" || password == "") {
+      alert("plz fill out fields");
+      return false;
+    } else if (name.length < 4 || password.length < 6 || email.length < 5) {
+      alert("required fields are not accurate");
+      return false;
+    } else {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((auth) =>{
+          console.log(auth);
+          if(auth){
+            history.push('/');
+          }
+        })
+        .catch((err) => console.log(err));
+      return true;
+    }
+  };
+
   return (
     <div className="register">
       <Link to="/">
@@ -20,7 +43,7 @@ function Register() {
       </Link>
       <div className="register_container">
         <h1>Create Account</h1>
-        <form method="post" action="">
+        <form method="post" action="" onSubmit={validateForm}>
           <h5>Your name:</h5>
           <input
             type="text"

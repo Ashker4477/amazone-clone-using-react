@@ -1,19 +1,51 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
+import { auth } from "../Firebase";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
 
-  const signin = (e) => {
-    e.preventDefault();
-  };
-
   const register = (e) => {
     e.preventDefault();
-    history.push("/register");
+    if (
+      email === "" ||
+      email.length < 4 ||
+      password === "" ||
+      password.length < 6
+    ) {
+      alert("pls enter the fields");
+    } else {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((auth) => {
+          console.log("Register Success");
+          if (auth) {
+            history.push("/register");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  const signin = (e) => {
+    e.preventDefault();
+    if (
+      email === "" ||
+      email.length < 4 ||
+      password === "" ||
+      password.length < 6
+    ) {
+      alert("pls enter the fields");
+    } else {
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then((auth) => {
+          history.push("/");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -27,7 +59,7 @@ function Login() {
       </Link>
       <div className="login_container">
         <h1>Sign-in</h1>
-        <form method="post" action="/login">
+        <form method="post" action="">
           <h5>E-mail:</h5>
           <input
             type="text"
@@ -40,7 +72,11 @@ function Login() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <button onClick={signin} className="login_signin_button">
+          <button
+            type="submit"
+            onClick={signin}
+            className="login_signin_button"
+          >
             Sign-in
           </button>
         </form>
